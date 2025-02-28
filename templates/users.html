@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Users</h2>
+    
+    <!-- Add User Form -->
+    <div class="card p-3">
+        <h4>Add User</h4>
+        <form method="POST" action="{% url 'add_user' %}">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <label>First Name*</label>
+                    <input type="text" name="first_name" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label>Last Name*</label>
+                    <input type="text" name="last_name" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label>Username*</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label>Email*</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label>Password*</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label>User Role*</label>
+                    <select name="role" class="form-control">
+                        <option value="Admin">Admin</option>
+                        <option value="User">User</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success mt-3">Add</button>
+        </form>
+    </div>
+
+    <!-- User List -->
+    <h4 class="mt-4">View Users</h4>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Super User</th>
+                <th>Staff User</th>
+                <th>Deleted At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.is_superuser }}</td>
+                <td>{{ user.is_staff }}</td>
+                <td>{{ user.deleted_at|default:"None" }}</td>
+                <td>
+                    <a href="{% url 'edit_user' user.id %}" class="btn btn-primary btn-sm">✏ Edit</a>
+                    <a href="{% url 'delete_user' user.id %}" class="btn btn-danger btn-sm">🗑 Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

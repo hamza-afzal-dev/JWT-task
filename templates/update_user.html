@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Update User{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h2 class="text-center mb-3">Update User</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_username" class="form-label">Username</label>
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email</label>
+                {{ form.email }}
+            </div>
+            <button type="submit" class="btn btn-success w-100">Update</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
